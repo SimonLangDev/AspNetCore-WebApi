@@ -5,14 +5,15 @@ using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
-using IndividualAuthentication_MySql.Models;
-using IndividualAuthentication_MySql.TokenProvider;
+using IndividualAuthentication_MongoDB.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using IndividualAuthentication_MongoDB.TokenProvider;
+using MongoDB.Driver;
 
-namespace IndividualAuthentication_MySql
+namespace IndividualAuthentication_MongoDB
 {
     public partial class Startup
     {
@@ -70,10 +71,12 @@ namespace IndividualAuthentication_MySql
 
         private async Task<ClaimsIdentity> GetIdentityAsync(string username, string password, string grantType)
         {
-            var context = new AccountContext(Configuration.GetConnectionString("DefaultConnection"));
+            var context = new MongoDBContext(Configuration.GetSection("MongoConnection:ConnectionString").Value, Configuration.GetSection("MongoConnection:DatabaseName").Value, Convert.ToBoolean(Configuration.GetSection("MongoConnection:IsSSL").Value));
 
-            var account = await context.GetAccountAsync(username);
-            if (account != null && grantType == "password" && account.Password == password)
+            var account = await context.Accounts.FindAsync(t => t.Email == username);
+            var onAccount = await account.FirstOrDefaultAsync();
+
+            if (account != null && grantType == "password" && onAccount.Password == password)
             {
                 return await Task.FromResult(new ClaimsIdentity(new GenericIdentity(username, "Token"), new Claim[] { }));
             }

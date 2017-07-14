@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace IndividualAuthentication_MySql.TokenProvider
+namespace IndividualAuthentication_MongoDB.TokenProvider
 {
     public class TokenProviderMiddleware
     {

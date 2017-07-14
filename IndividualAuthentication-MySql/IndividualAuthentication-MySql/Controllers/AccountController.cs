@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using foodjunkieWebAPI.Models;
 using IndividualAuthentication_MySql.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -87,7 +86,7 @@ namespace IndividualAuthentication_MySql.Controllers
             if (await context.GetAccountAsync(model.Email) != null)
                 return BadRequest("User exist");
 
-            await context.PostAccountAsync(new Account { Email = model.Email, Password = model.Password });
+            await context.PostAccountAsync(new Account { Email = model.Email, Password = model.Password, Online = false });
 
             return Ok();
         }

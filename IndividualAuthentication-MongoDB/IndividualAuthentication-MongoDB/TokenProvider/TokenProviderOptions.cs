@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.IdentityModel.Tokens;
 
-namespace IndividualAuthentication_MySql.TokenProvider
+namespace IndividualAuthentication_MongoDB.TokenProvider
 {
     public class TokenProviderOptions
     {

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.IdentityModel.Tokens;
 
-namespace IndividualAuthentication_MySql.TokenProvider
+namespace IndividualAuthentication_MongoDB.TokenProvider
 {
     public class JwtDataFormat : ISecureDataFormat<AuthenticationTicket>
     {
